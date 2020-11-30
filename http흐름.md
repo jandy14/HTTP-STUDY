@@ -148,7 +148,7 @@ TLDNS = Top Level Domain Name Server
 - header 내용
 
 # 참고자료
-http의 전반적인 흐름
+http의 전반적인 흐름
 https://blog.fakecoding.com/archives/about-https-flow/
 
 http의 전형적인 흐름
