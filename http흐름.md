@@ -129,6 +129,9 @@ Content-Type: text/html
 ```
 
 # 받은 html은 어떻게 처리할까
+렌더링 엔진이 html과 css를 통해 화면에 보여주고, js해석기로 페이지를 제어한다.
+
+자세한 내용은 [브라우저의 원리](./브라우저의%20원리.md)
 
 # https의 흐름
 https는 http에 보안이 추가된 방식이다.
@@ -139,6 +142,10 @@ https는 http에 보안이 추가된 방식이다.
 
 # 용어
 TLDNS = Top Level Domain Name Server
+
+# 조금 더 알아볼 것
+- MIME type
+- header 내용
 
 # 참고자료
 http의 전반적인 흐름
@@ -155,8 +162,3 @@ https://developer.mozilla.org/ko/docs/Web/HTTP/Basics_of_HTTP/Evolution_of_HTTP
 
 http의 구조
 https://velog.io/@teddybearjung/HTTP-%EA%B5%AC%EC%A1%B0-%EB%B0%8F-%ED%95%B5%EC%8B%AC-%EC%9A%94%EC%86%8C
-
-# 참고할 자료
-브라우저의 구조
-https://www.slideshare.net/JinKyoungHeo/1-2-53043752
-
