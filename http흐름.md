@@ -51,6 +51,7 @@ html전송만을 위해 만들어졌습니다. 매우 간단하고 확장성이 
 - quic을 통한 통신
 
 # request와 response는 어떻게 구성되어 있을까
+
 ## request의 구조
 request의 구조는 크게 세가지로 나누어져 있다.
 - start line
@@ -127,6 +128,8 @@ Content-Type: text/html
 
 <!DOCTYPE html... (here comes the 29769 bytes of the requested web page)
 ```
+
+더 자세한 내용은 [http구조](./http구조.md)
 
 # 받은 html은 어떻게 처리할까
 렌더링 엔진이 html과 css를 통해 화면에 보여주고, js해석기로 페이지를 제어한다.
