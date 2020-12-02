@@ -56,13 +56,137 @@ status code 다음과 같이 정해져 있다.
 - 5XX (서버 에러)
     - 500 Internal Server Error 서버가 요청처리 도중 예상치 않은 상황에 놓임
     - 503 Service Unavailable 서버가 요청을 처리할 수 없는 상황임(과부하 등)
-    
+
 
 전체 상태 코드는 [링크](https://developer.mozilla.org/ko/docs/Web/HTTP/Status)에서 확인 가능하다.
 
 ## URL의 구조
 path는 url에서 도메인과 포트 뒤에 오는 정보이다. url의 구조를 설명해둔 사이트를 [링크](https://victorydntmd.tistory.com/287)해 둔다.
 
+# header
+start line 다음 라인부터 공백 라인까지 라인별로 key:value의 구조로 되어있다.
+
+## 주요 헤더
+### 공통 헤더
+요청/응답 모두에 사용되는 헤더
+- Connection tcp연결은 지속할지 끊을지 알려준다.
+    - Connection: close;
+    - Connection: Keep-Alive;
+- Date 메세지가 생성된 시간을 알려준다. 포맷이 정해져 있다.
+    - Date: Thu, 22 Jan 2015 04:20:18 GMT
+    - Cache-Control 캐시 관련 헤더에서 설명
+    - Pragma HTTP/1.0 캐시와의 하위 호환성을 위해 사용
+### 엔티티 관련 헤더
+전달되는 리소스(개체)의 정보에 관한 헤더
+- Content-Type (공통) 리소스의 유형과 인코딩 방식을 알려준다. MIME type
+    - Content-Type: text/html; charset-latin-1
+- Content-Language (공통) 해당 리소스와 가장 잘 어울리는 언어
+- Content-Encoding (공통) 데이터의 인코딩 방식
+    - Content-Encoding: gzip, deflate
+- Content-Location (공통) 해당 리소스의 실제 위치
+- Content-Disposition (응답) 리소스를 어떻게 처리할지
+    - Content-Disposition: inline;
+    - Content-Disposition: attachment; filename='filename.csv'
+    - inline은 화면에 표시 attachment는 다운로드
+- Content-Security-Policy (응답) 다른 외부 파일들을 불러올 때, 허용할 것과 하지않을 것을 명시
+- Location (응답) 리소스가 리다이렉션 됐을 때, 이동한 위치
+    - 302와 같은 응답일 경우 Location값을 기준으로 이동한다.
+- Last-Modified (응답) 리소스 마지막 갱신 날짜
+- Transfer-Encoding (응답) 동적으로 생성되어 Body의 길이를 모르는 경우에 조금씩 전송이 가능
+
+### 요청 헤더
+요청에만 사용되는 헤더
+- Host 요청하는 호스트의 IP와 포트
+- User-Agent 클라이언트 소프트웨어(브라우저, OS) 명칭과 버전
+- From 클라이언트 사용자 메일 주소 (이건왜?)
+- Cookie 클라이언트에 저장된 쿠키 정보
+- Referer 직전에 머물던 웹 링크 주소
+- If-Modified-Since 제시한 날짜 이후에 변경된 리소스 취득 요청
+- Authorization 인증토큰(jwt등)을 서버로 전송할 때, "토큰 종류 + 값" 으로 전송
+- Origin 서버로 POST요청을 보낼 때, 요청이 어느 곳에서 시작됐는지
+- Accept 클라이언트가 원하는 리소르 타입
+- Accept-Charset 클라이언트가 원하는 문자셋
+- Accept-Encoding 클라이언트가 원하는 인코딩 방식
+- Accept-Language 클라이언트가 원하는 언어
+- Range 범위 요청때 사용, 요청할 범위를 지정
+요청 예시
+```
+GET /home.html HTTP/1.1
+Host: developer.mozilla.org
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/ *;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://developer.mozilla.org/testpage.html
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+If-Modified-Since: Mon, 18 Jul 2016 02:36:04 GMT
+If-None-Match: "c561c68d0ba92bbeb8b0fff2a9199f722e3a621a"
+Cache-Control: max-age=0
+```
+```
+POST /myform.html HTTP/1.1
+Host: developer.mozilla.org
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0
+Content-Length: 128
+
+(후략)
+```
+### 응답 헤더
+응답에만 사용되는 헤더
+- Server 서버 소프트웨어 정보
+- Accept-Range 서버가 범위 요청을 지원하는지, 범위의 단위는 무엇인지
+- Set-Cookie 서버에서 클라이언트에게 쿠키 정보를 설정
+- Expires 리소스가 지정된 날짜까지 캐시로써 유효함
+- Allow 서버가 처리가능한 메소드 리스트
+예시
+```
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: *
+Connection: Keep-Alive
+Content-Encoding: gzip
+Content-Type: text/html; charset=utf-8
+Date: Mon, 18 Jul 2016 16:06:00 GMT
+Etag: "c561c68d0ba92bbeb8b0f612a9199f722e3a621a"
+Keep-Alive: timeout=5, max=997
+Last-Modified: Mon, 18 Jul 2016 02:36:04 GMT
+Server: Apache
+Set-Cookie: mykey=myvalue; expires=Mon, 17-Jul-2017 16:06:00 GMT; Max-Age=31449600; Path=/; secure
+Transfer-Encoding: chunked
+Vary: Cookie, Accept-Encoding
+X-Backend-Server: developer2.webapp.scl3.mozilla.com
+X-Cache-Info: not cacheable; meta data too large
+X-kuma-revision: 1085259
+x-frame-options: DENY
+
+(후략)
+```
+### 캐시 관련 헤더
+- Cache-Control (공통,값은 좀 다름) 캐시를 어떻게 처리할지
+    - no-store : 아무것도 캐싱하지 않는다.
+    - no-cache : 캐시를 사용하기 전에 서버에 사용해도 되는지 물어본다.
+    - public(응답) : 중개 서버에 저장해도 됨
+    - private(응답) : 사용자 환경에만 저장됨
+    - max-age={second} : 캐시의 유효 시간
+- Expires (응답) 리소스가 지정된 날짜까지 캐시로써 유효함. max-age가 있다면 이 헤더는 무시됨.
+- Age (응답) max-age 시간 내에서 얼마나 시간이 흘렀느지 알려줌.
+- ETag (응답) http컨텐츠가 바뀌었는지를 검사할 때 사용(해싱값?)
+- If-None-Match (요청) ETag가 변했는지 확인 요청
+### 쿠키 관련 헤더
+- Cookie (요청) 서버가 Set-Cookie로 클라이언트에 남김 쿠키 정보
+- Set-Cookie (응답) 서버측에서 클라이언트에 쿠키 정보를 남길 때 사용
+    -Set-Cookie: attribute=value; [option]
+    - Expires 쿠키 만료 날짜
+    - Max-Age 쿠키의 수명 (다른건가?)
+    - Secure https에서만 쿠키가 전송됨
+    - HttpOnly 자바스크립트에선 쿠키 접근 금지
+    - Domain 해당 도메인과 일치하는 요청에만 쿠키가 전송됨
+    - Path 해당 경로와 일치하는 요청에만 쿠키가 전송됨
+    - Set-Cookie: zerocho=babo; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
+
+# 용어
+- 범위 요청
+    - 요청하는 리소스의 모든 부분이 아닌 일부분만 요청하는 것
 # 참고 자료
 URI URL 그리고 URL구조
 https://victorydntmd.tistory.com/287
@@ -75,3 +199,12 @@ https://ko.wikipedia.org/wiki/HTTP_%EC%83%81%ED%83%9C_%EC%BD%94%EB%93%9C
 
 주요 http 상태 코드
 https://sjh836.tistory.com/81
+
+http 헤더
+https://developer.mozilla.org/ko/docs/Web/HTTP/Headers
+
+주요 http 헤더
+https://gmlwjd9405.github.io/2019/01/28/http-header-types.html
+
+주요 http 헤더
+http://rangken.github.io/blog/2015/http-headers/
