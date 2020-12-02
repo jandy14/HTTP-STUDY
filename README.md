@@ -26,3 +26,13 @@
 - 아파치와 nginx의 특징과 차이
 - http 구조 (진행중)
 - 브라우저의 구조 (진행중)
+
+## 12/02
+### 작성 문서
+* [브라우저의 원리](./브라우저의%20원리.md)
+* [Blocking-NonBlocking-Synchronous-Asynchronous.md](./Blocking-NonBlocking-Synchronous-Asynchronous.md)
+* [http구조](./http구조.md)
+### 공부 내용
+- 브라우저의 전체적인 구조와 렌더링 과정 파악
+- 블럭-논블럭, 동기-비동기 이해
+- http 구조 (상태코드, 헤더)
