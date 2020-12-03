@@ -40,7 +40,6 @@ request의 http 버전을 나타낸다. 메세지의 구조를 알려주고 응�
 # status code
 response의 결과에 따라 status code가 달라진다.
 
-
 status code 다음과 같이 정해져 있다.
 - 1XX (정보)
 - 2XX (성공)
@@ -187,7 +186,7 @@ x-frame-options: DENY
     - Set-Cookie: zerocho=babo; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
 
 # http 버전별 변화
-http 버전별로 를 이해하기 위해 http의 역사를 알아보자.
+http를 이해하기 위해 http의 버전 별 변화에 대해 알아보자.
 
 ## http/0.9
 html전송만을 위해 만들어졌습니다. 매우 간단하고 확장성이 없습니다.
