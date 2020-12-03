@@ -26,29 +26,7 @@ http를 통해서 클라이언트가 서버와 어떻게 통신을 하게되는�
 1. 클라이언트에게 IP를 전달한다.
 
 # http는 버전별로 무엇이 달라졌을까
-http의 원리를 이해하기 위해 http의 역사를 알아보자.
-
-## http/0.9
-html전송만을 위해 만들어졌습니다. 매우 간단하고 확장성이 없습니다.
-- 0.9는 나중에 붙여진 버전(원래는 버전이 없었음)
-- get 메소드만 지원
-- http 헤더가 없어 html외에 다른 유형의 파일은 전송 불가
-- 오류 코드가 없어 파일 내부에 설명을 포함해 전달
-## http/1.0
-- 상태코드 추가 (성공실패 여부 확인)
-- 해더가 추가되고 'Content-Type'의 추가로 다른 유형의 파일도 전송 가능
-- post, head 메서드 추가
-## http/1.1
-- http의 첫번째 표준
-- options, put, delete, trace 메서드 추가
-- 헤더값 추가
-- 파이프라이닝 추가?
-- 캐시 제어 메커니즘 추가?
-- **성능향상을 위해 연결을 끊지 않고 여러번의 파일을 받음** (1.0은 파일당 새로운 연결을 만들었음)
-## http/2.0
-- 텍스트에서 바이너리로 (최적화, 사용자는 읽을 수 없어짐)
-## http/3.0
-- quic을 통한 통신
+자세한 내용은 [http구조](./http구조.md#http%20version)
 
 # request와 response는 어떻게 구성되어 있을까
 
@@ -156,9 +134,6 @@ https://blog.fakecoding.com/archives/about-https-flow/
 
 http의 전형적인 흐름
 https://developer.mozilla.org/ko/docs/Web/HTTP/Session
-
-http버전별 차이
-https://falsy.me/http%EC%9D%98-%EB%B2%84%EC%A0%84-%EB%B3%84-%EC%B0%A8%EC%9D%B4%EC%97%90-%EB%8C%80%ED%95%B4-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B3%A0-ubuntu-nginx%EC%97%90-http-2%EB%A5%BC-%EC%A0%81%EC%9A%A9%ED%95%B4/
 
 http의 잔화
 https://developer.mozilla.org/ko/docs/Web/HTTP/Basics_of_HTTP/Evolution_of_HTTP
