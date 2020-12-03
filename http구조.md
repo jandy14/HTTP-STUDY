@@ -102,7 +102,7 @@ start line 다음 라인부터 공백 라인까지 라인별로 key:value의 구
 - Cookie 클라이언트에 저장된 쿠키 정보
 - Referer 직전에 머물던 웹 링크 주소
 - If-Modified-Since 제시한 날짜 이후에 변경된 리소스 취득 요청
-- Authorization 인증토큰(jwt등)을 서버로 전송할 때, "토큰 종류 + 값" 으로 전송
+- Authorization 인증토큰(jwt, basic등)을 서버로 전송할 때, "토큰 종류 + 값" 으로 전송
 - Origin 서버로 POST요청을 보낼 때, 요청이 어느 곳에서 시작됐는지
 - Accept 클라이언트가 원하는 리소르 타입
 - Accept-Charset 클라이언트가 원하는 문자셋
