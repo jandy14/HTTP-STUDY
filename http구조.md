@@ -35,7 +35,7 @@ path는 url일수도 경로만 나타낼 수도 있다. url의 구조를 설명�
 # http version
 request의 http 버전을 나타낸다. 메세지의 구조를 알려주고 응답 메세지에 써야 할 http버전을 알려준다.
 
-버전별 차이에 대해서는 [밑에](#-http-버전별-변화) 자세히 서술한다.
+버전별 차이에 대해서는 [밑에](#http-버전별-변화) 자세히 서술한다.
 
 # status code
 response의 결과에 따라 status code가 달라진다.
