@@ -31,7 +31,7 @@ Transport Layer Security (Secure Socket Layer)
 1. 클라이언트가 서버에 연결 시도
     1. DNS를 통해 IP 찾기
     1. TCP 연결
-1. 클라이언트에서 TLS 연걸을 위해 CLIENT HELLO 전송
+1. 클라이언트에서 TLS 연결을 위해 CLIENT HELLO 전송
     - session key 생성을 위한 랜덤 값
     - 프로토콜 버전
     - 클라이언트가 지원하는 암호방식 리스트
