@@ -184,6 +184,9 @@ x-frame-options: DENY
     - Domain 해당 도메인과 일치하는 요청에만 쿠키가 전송됨
     - Path 해당 경로와 일치하는 요청에만 쿠키가 전송됨
     - Set-Cookie: zerocho=babo; Expires=Wed, 21 Oct 2015 07:28:00 GMT; Secure; HttpOnly
+## CORS 관련 헤더
+자세한 내용은 [링크](./CORS.md#cors-관련-헤더)
+
 
 # http 버전별 변화
 http를 이해하기 위해 http의 버전 별 변화에 대해 알아보자.
