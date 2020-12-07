@@ -140,6 +140,7 @@ Content-Length: 128
 - Set-Cookie 서버에서 클라이언트에게 쿠키 정보를 설정
 - Expires 리소스가 지정된 날짜까지 캐시로써 유효함
 - Allow 서버가 처리가능한 메소드 리스트
+
 예시
 ```
 HTTP/1.1 200 OK

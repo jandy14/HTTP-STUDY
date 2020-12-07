@@ -91,7 +91,7 @@ OPTION 메소드로 보내며 Origin을 넣어 요청을 보내면 서버는 Acc
 - Access-Control-Allow-Origin : 이 서버에서 허용하는 출처가 적혀있다.
     - Access-Control-Allow-Origin: www.naver.com
     - Access-Control-Allow-Origin: *
-- Access-Control-Allow-Methods : 이 서버에서 허용하는 메소드 리스트(Allow와는 다르게 CORS에서만 적용된다.)
+- Access-Control-Allow-Methods : 이 서버에서 허용하는 메소드 리스트(Allow 헤더와는 다르게 CORS에서만 적용된다.)
     - Access-Control-Allow-Methods: GET, POST
 - Access-Control-Allow-Headers : preflight request의 응답으로 사용되며, 요청에 허용하는 헤더를 표시
     - Access-Control-Allow-Headers: header-name, header-name
