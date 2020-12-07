@@ -47,7 +47,7 @@
 - 지금까지의 내용 복습
 
 ## 12/07
-### 작성 문저
+### 작성 문서
 * [CORS](./HTTP/CORS.md)
 * [Java개요](./JAVA/Java개요.md)
 * [Java문법](./JAVA/Java문법.md)
