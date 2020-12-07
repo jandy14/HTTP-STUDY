@@ -45,3 +45,13 @@
 - http 버전별 차이에 대한 이해
 - OSI 7 계층에 대한 이해
 - 지금까지의 내용 복습
+
+## 12/07
+### 작성 문저
+* [CORS](./HTTP/CORS.md)
+* [Java개요](./JAVA/Java개요.md)
+* [Java문법](./JAVA/Java문법.md)
+### 공부 내용
+- SOP와 CORS에 대한 이해
+- Java의 특징에 대한 이해
+- Java의 기본적 문법(진행중)
