@@ -73,6 +73,8 @@ for(String name: nameArr)
 ## 상속과 인터페이스
 상속과 인터페이스는 공통점이 많고 어떤 것을 사용해야할지에 대한 얘기는 생략하고 문법만 적는다.
 
+인터페이스의 멤버 변수는 모두 public static final의 속성을 갖는다.
+
 ```java
 package org.opentutorials.javatutorials.abstractclass.example2;
 abstract class A{
@@ -300,6 +302,10 @@ class DivideException extends RuntimeException {
 
 
 ## 콜렉션
+
+
+## enum
+
 
 # 그냥 넘어가지만 중요한 내용
 언어에서 중요한 내용이지만 다른 언어(C, C++, C#, Python)들과 많이 중복되는 내용이라 생략한 내용
