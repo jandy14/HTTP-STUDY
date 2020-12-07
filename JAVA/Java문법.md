@@ -258,6 +258,7 @@ IOException은 try-catch나 throws가 필요하다.
 하지만 ArithmeticException은 처리를 하지 않아도 컴파일된다.
 
 그 이유를 알아보자.
+
 ### Throwable
 자바에는 Throwable이라는 클래스가 있고 다음과 같은 상속 구조를 갖는다.
 
@@ -312,6 +313,7 @@ class DivideException extends RuntimeException {
 - 클래스와 인스턴스
 - 추상 (abstract)
 - 다형성
+- 동적 바인딩
 
 # 참고 자료
 java문법
