@@ -299,13 +299,118 @@ class DivideException extends RuntimeException {
 외에도 더 있지만 여기까지만 알아본다.
 
 ## 제네릭
+C++에서의 템플릿. 일반화 프로그래밍을 지원하기 위한 문법이다.
 
+적용할 수 있는 요소는 클래스와 메소드이다.
+
+문법을 살펴보자.
+```java
+class Person<T, S>{
+    public T info;
+    public S id;
+    Person(T info, S id){ 
+        this.info = info;
+        this.id = id;
+    }
+    public <U> void printInfo(U info){
+        System.out.println(info);
+    }
+}
+```
+extends로 자식 클래스 타입만 사용하도록 제한할 수 있다.
+
+아래 예제는 Info의 자식 클래스만 타입으로 사용가능하다.
+```java
+class Person<T extends Info>{
+    public T info;
+    Person(T info){ this.info = info; }
+}
+```
+
+super로 부모 클래스 타입만 사용하도록 제한할 수 있다.(언제 쓰려나)
+
+사용법은 extends와 동일
+
+제네릭은 생략이 가능하다. 아래 두 줄은 동일한 작업을 한다.
+```java
+Person<Info, Integer> p1 = new Person<Info, Integer>(e, i);
+Person p2 = new Person(e, i);
+```
 
 ## 콜렉션
+![콜렉션구조도](https://s3.ap-northeast-2.amazonaws.com/opentutorials-user-file/module/516/2160.png)
 
+기본적인 내용은 넘어가고 각각의 특징만 보도록 하자. (사용법은 쓸 때 알아보자. Iterator 통해서 접근하는 듯)
+
+### set
+중복없이 자료를 저장하는 자료구조
+
+- HashSet : 해싱을 이용해서 자료를 관리한다. 순서 보장 안됨, 삽입/삭제 O(1)
+- LinkedHashSet : 해싱과 링크드리스트를 이용해 자료를 관리한다. 입력 순서 보장, 삽입/삭제 O(1) 순서를 기억할 리스트가 추가되기 때문에 메모리 사용이 늘어나고, 삽입/삭제에 약간의 로직이 추가되어 HashSet보다는 (아주) 조금 느리다.
+
+- TreeSet : 트리(레드-블랙)를 이용해서 자료를 관리한다. 자료는 정렬된다. 삽입, 삭제 O(log(n))
+
+### List
+설명 생략
+
+- ArrayList : 배열로 구현된 리스트. 용량(capacity)이 차면 자동으로 추가로 용량을 확보한다.
+- Vector : 동기화 기능이 추가된 ArrayList. 멀티스레드에서도 안전!
+- LinkedList : 연결리스트.
+
+### Map
+Map은 Set에 key:value형태로 저장하는 자료구조이다.
+
+- HashMap : HashSet과 동일
+- HashTable : 동기화 기능이 있는 HashMap
+- LinkedHashMap : LinkedHashSet과 동일
+- TreeMap : TreeSet과 동일
 
 ## enum
+자바에서 enum은 클래스로 관리된다.
 
+예제를 먼저 보고 문법에 대해 알아보자.
+
+```java
+enum Fruit{
+    APPLE("red"), PEACH("pink"), BANANA("yellow");
+    private String color;
+    Fruit(String color){
+        System.out.println("Call Constructor "+this);
+        this.color = color;
+    }
+    String getColor(){
+        return this.color;
+    }
+}
+
+enum Company{
+    GOOGLE, APPLE, ORACLE;
+}
+
+public class ConstantDemo {
+     
+    public static void main(String[] args) {
+        Fruit type = Fruit.APPLE;
+        switch(type){
+            case APPLE:
+                System.out.println(57+" kcal, "+Fruit.APPLE.getColor());
+                break;
+            case PEACH:
+                System.out.println(34+" kcal"+Fruit.PEACH.getColor());
+                break;
+            case BANANA:
+                System.out.println(93+" kcal"+Fruit.BANANA.getColor());
+                break;
+        }
+    }
+}
+```
+
+- 생성자는 private만 가능하다.
+- 생성자의 매개변수는 다음과 같이 넣어준다. (많이 특이하다.)
+    - `APPLE("red"), PEACH("pink"), BANANA("yellow");`
+- 멤버 변수도 사용가능하다. 접근제한자는 자유.
+- values()라는 메소드를 통해 열거값 모두를 얻을 수 있다.
 
 # 그냥 넘어가지만 중요한 내용
 언어에서 중요한 내용이지만 다른 언어(C, C++, C#, Python)들과 많이 중복되는 내용이라 생략한 내용
@@ -320,6 +425,9 @@ class DivideException extends RuntimeException {
 - 추상 (abstract)
 - 다형성
 - 동적 바인딩
+
+# 용어
+- 용량 : capacity. 데이터의 양이 아닌 실제로 확보하고 있는 공간의 양
 
 # 참고 자료
 java문법
@@ -341,3 +449,15 @@ https://gyrfalcon.tistory.com/entry/JAVA-%EC%A0%91%EA%B7%BC-%EC%A0%9C%ED%95%9C%E
 
 예외
 https://shnoble.tistory.com/82
+
+Set
+https://velog.io/@gillog/HashSet
+
+LinkedHashSet
+https://docs.oracle.com/javase/7/docs/api/java/util/LinkedHashSet.html
+
+LinkedHashSet의 삽입/삭제의 시간 복잡도
+https://stackoverflow.com/questions/18467777/hashset-and-linkedhashset
+
+List
+https://blog.naver.com/PostView.nhn?blogId=heartflow89&logNo=220991199432&parentCategoryNo=&categoryNo=28&viewDate=&isShowPopularPosts=false&from=postView
