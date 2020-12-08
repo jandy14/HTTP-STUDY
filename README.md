@@ -55,3 +55,12 @@
 - SOP와 CORS에 대한 이해
 - Java의 특징에 대한 이해
 - Java의 기본적인 문법(진행중)
+
+## 12/08
+### 작성 문서
+* [Java문법](./JAVA/Java문법.md)
+* [Spring개요](./SPRING/Spring개요.md)
+### 공부 내용
+- Java의 기본적인 문법
+- Spring에 대한 전반적인 파악(노력중)
+- Maven과 Gradle의 개념적 이해
