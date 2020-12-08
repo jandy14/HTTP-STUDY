@@ -1,3 +1,26 @@
+# 경고!
+- 이 글은 다른 언어에 익숙하지만 자바를 새로 배워야하는 사람이 작성한 글입니다.
+
+- 작성자의 주관적인 기준으로 작성 여부를 정하였습니다.
+
+- 특정 내용에 대해서는 언급없이 생략되었을 수 있습니다. (Wrapper class, IO 등)
+
+- 작성자는 문법보다 원리를 중시하는 사람입니다!
+
+# 그냥 넘어가지만 중요한 내용
+언어에서 중요한 내용이지만 다른 언어(C, C++, C#, Python)들과 많이 중복되는 내용이라 생략한 내용
+
+- 제어문
+- 반복문
+- 연산자
+- static
+- 오버라이딩
+- 오버로딩
+- 클래스와 인스턴스
+- 추상 (abstract)
+- 다형성
+- 동적 바인딩
+
 # 기초 문법
 기본적인 문법은 C와 비슷한 부분이 많다. OOP관련 부분도 C#과 비슷하다.
 
@@ -115,6 +138,7 @@ public class Bat implements Moveable {
 ```
 
 인터페이스 메소드도 구현을 할 수 있다. (8버전부터)
+
 ## 접근 제한자
 자바는 4가지의 접근제한자를 가진다.
 - public : 접근 제한 없음. 모두 허용
@@ -125,12 +149,14 @@ public class Bat implements Moveable {
 접근 제한자는 다음 요소에만 적용할 수 있다.
 - 클래스 (public, default만)
 - 멤버 변수, 메소드, 생성자
+
 ## final
 변경과 상속을 금지시키는 키워드이다. 클래스, 메소드, 변수에 적용할 수 있다.
 
 - final 클래스 : 상속 불가
 - final 메소드 : 오버라이딩 불가
 - final 변수 : 값 변경 불가
+
 ## 패키지
 패키지는 클래스가 관리되고 있는 디렉토리와 동일하다.
 
@@ -412,20 +438,6 @@ public class ConstantDemo {
 - 멤버 변수도 사용가능하다. 접근제한자는 자유.
 - values()라는 메소드를 통해 열거값 모두를 얻을 수 있다.
 
-# 그냥 넘어가지만 중요한 내용
-언어에서 중요한 내용이지만 다른 언어(C, C++, C#, Python)들과 많이 중복되는 내용이라 생략한 내용
-
-- 제어문
-- 반복문
-- 연산자
-- static
-- 오버라이딩
-- 오버로딩
-- 클래스와 인스턴스
-- 추상 (abstract)
-- 다형성
-- 동적 바인딩
-
 # 용어
 - 용량 : capacity. 데이터의 양이 아닌 실제로 확보하고 있는 공간의 양
 
@@ -461,3 +473,6 @@ https://stackoverflow.com/questions/18467777/hashset-and-linkedhashset
 
 List
 https://blog.naver.com/PostView.nhn?blogId=heartflow89&logNo=220991199432&parentCategoryNo=&categoryNo=28&viewDate=&isShowPopularPosts=false&from=postView
+
+HashMap, HashTable
+https://firedev.tistory.com/entry/Java-HashMap%EA%B3%BC-Hashtable-%EC%9D%98-%EC%B0%A8%EC%9D%B4%EC%A0%90
