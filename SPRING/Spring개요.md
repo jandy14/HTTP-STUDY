@@ -3,6 +3,7 @@
 
 DI, IoC가 무엇인지 알아보는 중(으어어..)
 
+어노테이션
 # Maven, Gradle
 Maven과 Gradle은 자바 프로젝트 관리 도구이다.
 
