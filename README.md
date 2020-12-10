@@ -76,3 +76,16 @@
 영상 강의를 정주행하느라 내용 정리를 못함.
 
 내일 내용 정리하면서 복습 예정
+
+## 12/10
+### 작성 문서
+* [Spring개요](./SPRING/Spring개요.md)
+* [IoC](./SPRING/IoC.md)
+* [AOP](./SPRING/AOP.md)
+* [MVC](./SPRING/MVC.md)
+* [Annotation](./JAVA/Annoration.md)
+### 공부 내용
+- 전날 공부 내용 복습, 보충 및 정리
+- 스프링 부트가 무엇인지
+- java의 annotation
+
