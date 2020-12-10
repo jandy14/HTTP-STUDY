@@ -83,7 +83,7 @@
 * [IoC](./SPRING/IoC.md)
 * [AOP](./SPRING/AOP.md)
 * [MVC](./SPRING/MVC.md)
-* [Annotation](./JAVA/Annoration.md)
+* [Annotation](./JAVA/Annotation.md)
 ### 공부 내용
 - 전날 공부 내용 복습, 보충 및 정리
 - 스프링 부트가 무엇인지
