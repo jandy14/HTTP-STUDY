@@ -89,3 +89,10 @@
 - 스프링 부트가 무엇인지
 - java의 annotation
 
+## 12/14
+### 작성 문서
+* [DBMS개요](./DB/DBMS개요.md)
+* [트랜잭션](./DB/트랜잭션.md)
+### 공부 내용
+- DBMS에 대한 전반적인 이해
+- 트랜잭션에 대한 이해(ACID,Isolation-Level,Lock)(진행중)
