@@ -96,3 +96,15 @@
 ### 공부 내용
 - DBMS에 대한 전반적인 이해
 - 트랜잭션에 대한 이해(ACID,Isolation-Level,Lock)(진행중)
+
+## 12/15
+### 작성 문서
+* [트랜잭션](./DB/트랜잭션.md)
+* [INDEX](./DB/INDEX.md)
+* [DBMS개요](./DB/DBMS개요.md)
+* [정규화](./DB/정규화.md)
+### 공부 내용
+- 트랜잭션에 대한 이해(ACID,Isolation-Level,Lock)
+- Index에 대한 이해
+- 무결성에 대한 이해
+- 정규화에 대한 이해(진행중)
