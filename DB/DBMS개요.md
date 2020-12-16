@@ -67,6 +67,19 @@ RDB에 데이터를 조작하고 열람하기 위해서 사용하는 언어이�
 
 자세한 내용은 추가 예정
 
+## SP (Stored Procedure)
+저장 프로시저는 함수처럼 사용할 수 있게 미리 컴파일한 쿼리 집합이다.
+
+저장 프로시저를 이용하면 다음과 같은 장점이 있다.
+
+- 최초 컴파일시 최적화돼 호출시 과정을 생략할 수 있다.(비용 감소)
+- 전달할 내용이 줄어들어 네트워크 트래픽이 감소한다.
+- 개발언어에 비의존적이다.
+- 제어문을 통해 절차적 기능 구현이 가능하다.
+- SP만 수정하면 서버 재시작없이 적용시킬 수 있다.
+
+로직을 WAS가 아닌 DBMS에서 처리를 하기 때문에 DBMS를 잘 알아야 하며, 디버깅과 유지보수가 어려워진다. 때문에 대규모가 아니면 손해일 수 있다.
+
 # NoSQL
 비 관계형 데이터 베이스 모두를 일컫는 단어다.
 
@@ -90,3 +103,14 @@ https://untitledtblog.tistory.com/123
 
 참조 무결성
 https://ko.wikipedia.org/wiki/%EC%B0%B8%EC%A1%B0_%EB%AC%B4%EA%B2%B0%EC%84%B1
+
+SP
+https://greatepig.tistory.com/12
+
+SP의 장단점<br>
+https://graduation.tistory.com/444
+
+https://okky.kr/article/396251
+
+SP는 왜 쓰나요?
+https://okky.kr/article/357441
