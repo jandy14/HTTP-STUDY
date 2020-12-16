@@ -80,10 +80,51 @@ RDB에 데이터를 조작하고 열람하기 위해서 사용하는 언어이�
 
 로직을 WAS가 아닌 DBMS에서 처리를 하기 때문에 DBMS를 잘 알아야 하며, 디버깅과 유지보수가 어려워진다. 때문에 대규모가 아니면 손해일 수 있다.
 
-# NoSQL
-비 관계형 데이터 베이스 모두를 일컫는 단어다.
+## 파티션
+파티션은 큰 테이블과 인덱스 데이터를 물리적으로 여러 개 나눈 것을 말한다.
 
-자세한 내용은 추가 예정
+파티션을 하게되면 다음과 같은 장점이 생긴다.
+- 특정 DML과 Query의 성능이 향상된다.
+- 대용량 Data WRITE 환경에 효율적이다.
+- Full Scan시 데이터 접근 범위가 줄어든다.
+- 파티션별로 관리되면 전체가 훼손될 가능성이 줄어든다.
+
+단점
+- table JOIN비용이 증가한다.
+- index도 같이 파티셔닝된다.(table만 할 순 없음)
+
+분할 방법
+- 수평 분할
+    - Range : 값의 범위를 기준으로 나눈다.
+    - List : 특정 컬럼의 값을 기준으로 나눈다. ex) 국가별, 성별 (Range가 안되는 것)
+    - Hash : 값을 해싱해 나눈다.(동등 분배)
+- 수직 분할
+    - 수직 분할은 한 row의 양이 줄어 더 많은 row를 메모리에 올릴 수 있다.
+
+### 샤딩
+샤딩의 내용이 파티셔닝 내용과 너무 나도 흡사하다. 둘의 차이가 뭘까?
+
+여러 블로그를 참고했으나 내용이 좀 엇갈린다. 대부분 샤딩은 수평 파티셔닝이라고 한다.
+
+참고 링크<br>
+- http://theeye.pe.kr/archives/1917
+- https://zetastring.tistory.com/338
+- https://umbum.dev/969
+- https://seokbeomkim.github.io/posts/partition-and-sharding/
+    - 유일하게 다르다고 설명하는데 진위는 파악을 못했다.
+
+# NoSQL
+NoSQL은 관계형 데이터 베이스이 아닌 모든 데이터 베이스를 일컫는 단어다.
+
+관계형 데이터 모델의 한계를 다른 데이터 모델로 극복하기 위해 등장되었다. 관계형 데이터 베이스의 일관성 제약을 완화시켜서 많은 데이터, 짧은 지연 시간, 유연한 확장이 필요한 서비스에 최적화되어 있다.
+
+데이터 모델에 따라 분류한다.
+- Key-Value : 모든 데이터를 키-값 형태로 저장한다. (게이밍, 광고 기술등에 적합)
+- Document : json과 같은 형태로 저장한다. (시간에 따라 진화하는 컨텐츠의 관리에 적합)
+- Graph : 하나의 데이터가 노드이고 데이터 간의 관계가 엣지로 표현된다. (소셜 네트워킹, 추천 엔진에 적합)
+
+# 용어
+- VLDB : Very Large DB
 
 # 참고 자료
 데이터 베이스
@@ -114,3 +155,20 @@ https://okky.kr/article/396251
 
 SP는 왜 쓰나요?
 https://okky.kr/article/357441
+
+파티션<br>
+https://gmlwjd9405.github.io/2018/09/24/db-partitioning.html
+
+https://nesoy.github.io/articles/2018-02/Database-Partitioning
+
+파티션과 샤딩<br>
+http://theeye.pe.kr/archives/1917
+
+https://zetastring.tistory.com/338
+
+https://umbum.dev/969
+
+https://seokbeomkim.github.io/posts/partition-and-sharding/
+
+NoSQL
+https://aws.amazon.com/ko/nosql/
