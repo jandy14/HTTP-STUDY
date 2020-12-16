@@ -68,3 +68,6 @@ https://yurimkoo.github.io/db/2020/03/14/db-index.html
 
 Clustered/Non-Clustered
 https://s1107.tistory.com/38
+
+커버링 인덱스
+https://icarus8050.tistory.com/44
