@@ -118,6 +118,17 @@
 - 정규화(1,2,3,BC)에 대한 이해
 - SP,파티션,샤딩,NoSQL에 대한 개념 파악
 - Clustered Index에 대한 이해
+
+## 12/17
+### 작성 문서
+* [DBMS개요](./DB/DBMS개요.md)
+* [INDEX](./DB/INDEX.md)
+* [JAVADB](./DB/JAVADB.md)
+### 공부 내용
+- 커버링 인덱스에 대한 개념 파악
+- 쿼리 실행 과정 파악
+- JDBC,DBCP에 대한 이해
+
 <!-- 
 ## 12/16
 ### 작성 문서
@@ -125,10 +136,6 @@
 
 우선순위
 sql
-커버링 인덱스
-쿼리 실행 계획
-java db
 mybatis
 jpa
-jdbc & dbcp
  -->
