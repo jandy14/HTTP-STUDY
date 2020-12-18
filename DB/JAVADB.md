@@ -44,13 +44,40 @@ DBCP는 미리 Connection을 생성해 Object Pool을 이용해 관리한다.
 
 ## 종류
 - Commons DBCP : 아파치에서 만든 DBCP. JDBC버전에 유의해서 사용해야한다.
-- HikariCP : 스프링부트 2.0부터 성절된 default JDBC Connection Pool
+- HikariCP : 스프링부트 2.0부터 디폴트로 설정된 JDBC Connection Pool
 
 # ORM
+Object-Relational Mapping
+
+OOP의 객체와 RDB의 레코드를 매핑시켜줘 개발자가 OOP에 집중할 수 있게 한다.(패러다임)
+
+ORM 프레임워크는 객체와 RDB를 연결해주고 자동으로 쿼리를 생성해준다. 그래서 사용자는 ORM 프레임워크가 제공하는 쿼리 기능만 사용할 수 있다.
+
+장점
+- DBMS에 독립적이다.
+- 쿼리를 신경쓰지 않아 OOP에 집중할 수 있다.(SQL을 알아야 더 잘 사용할 수 있다.)
+
+단점
+- DBMS의 고유기능은 사용하지 못한다.(이식성이 높아지긴 한다.)
+- 프로젝트의 복잡성이 높아질 수록 설계가 힘들어진다.
 
 # JPA
+Java Persistence API
 
-# Mybatis
+자바 정의한 ORM 기술 표준. `인터페이스 모음`이다.
+
+Hibernate는 JPA를 구현한 오픈소스
+
+# MyBatis
+MyBatis는 ORM은 아니다.
+
+MyBatis는 SQL Mapper다.
+
+ORM은 데이터베이스의 데이터와 객체를 연결하지만 SQL Mapper는 SQL을 미리 작성하고 객체를 SQL에 값으로 넣어준다.
+
+MyBatis는 결과값을 객체와 매핑해 값을 채워주지만 SQL을 직접관리한다는 점에서 ORM과는 차이가 있다.
+
+이런 차이로 인해 MyBatis는 DBMS에 종속적이다.(변경이 힘들다.)
 
 # 참고 자료
 
@@ -68,3 +95,14 @@ https://kchanguk.tistory.com/14
 
 Commons DBCP
 https://d2.naver.com/helloworld/5102792
+
+ORM<br>
+https://gmlwjd9405.github.io/2019/02/01/orm.html
+
+http://www.incodom.kr/ORM
+
+JPA와 MyBatis
+https://dreaming-soohyun.tistory.com/entry/JPA%EC%99%80-MyBatis%EC%9D%98-%EC%B0%A8%EC%9D%B4-ORM%EA%B3%BC-SQL-Mapper
+
+JPA
+https://gmlwjd9405.github.io/2019/08/04/what-is-jpa.html
