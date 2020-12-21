@@ -135,6 +135,13 @@
 ### 공부 내용
 - ORM,JPA,MyBatis에 대한 개념 파악
 
+## 12/21
+### 작성 문서
+* [Cache](./CACHE/Cache.md)
+* [Redis](./CACHE/Redis.md)
+### 공부 내용
+- 캐시와 성능에 대한 이해
+- Redis에 대한 이해 (진행중)
 <!-- 
 ## 12/16
 ### 작성 문서
@@ -144,4 +151,5 @@
 sql
 mybatis
 jpa
+
  -->
