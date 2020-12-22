@@ -93,6 +93,7 @@ master3 = 11001-16383
 [Redis Cluster Code](https://github.com/redis/redis/blob/ac441c741379dd4002f664c81047e8412cb793d0/src/cluster.h#L117)
 
 클러스터 노드 구조체에 슬롯의 정보가 담겨있다.
+
 # 용어
 - 고가용성(HA,High Availability) : 장기적으로 운영가능(고장안남)
 - SPOF(Single Point Of Failure) : 고장나면 시스템 전체가 고장나는 한 점
