@@ -57,7 +57,11 @@ DNS에 비해 여러 기능이 추가돼 클라이언트가 최대한 빠르게 
 Redis와 in-memory, key-value에 대한 자세한 내용은 [링크](./Redis.md)
 
 # Varnish
-Varnish와 CDN에 대한 자세한 내용는 추가 예정
+Varnish는 웹 캐시 서버이다. 웹 가속기라는 표현을 사용하는데 필자가 보기엔 표현의 차이다.
+
+프록시 서버이자 웹 캐시 서버인 Squid에 비해 더 좋은 성능을 보인다고 한다.
+
+VCL이라는 설정언어를 사용해 간단하게 설정을 할 수 있다.
 
 # 참고 자료
 캐시
@@ -68,4 +72,7 @@ https://en.wikipedia.org/wiki/Locality_of_reference
 
 CDN
 https://goddaehee.tistory.com/173
+
+Varnish
+https://d2.naver.com/helloworld/352076
 
