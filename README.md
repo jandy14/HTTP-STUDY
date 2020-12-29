@@ -164,6 +164,12 @@
 * [Cache](./CACHE/Cache.md)
 ### 공부 내용
 - varnish와 CDN에 대한 개념 파악
+
+## 12/29
+### 작성 문서
+* [JavaScript개요](./JS/JavaScript개요.md)
+### 공부 내용
+- JavaScript의 전반적인 파악
 <!-- 
 ## 12/16
 ### 작성 문서
