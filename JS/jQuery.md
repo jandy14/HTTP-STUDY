@@ -60,6 +60,26 @@ $("ul").on("click", "a", function(event) { /* 코드 */ }); // 2번
 - 동적으로 생성된 요소들에 이벤트 핸들러를 따로 등록하지 않아도 된다.
 - 이벤트가 부모 요소에서만 등록되기 때문에 이벤트 핸들러가 적게 생성된다.
 
+# ajax
+Asynchronous JavaScript and XML
+
+ajax에 대한 기본적인 내용은 [링크](../HTTP/CORS.md#AJAX)
+
+jQuery에서도 ajax를 지원하며, 다음과 같이 사용할 수 있다.
+```javascript
+$.ajax({
+    url: "/examples/media/request_ajax.php", 
+    data: { name: "홍길동" }, 
+    method: "GET", // GET or POST
+    contentType: "application/json",
+    dataType: "json",
+})
+.done(function(data) {  })
+.fail(function(jqXHR, textStatus, errorThrown) {  })
+.always(function() {  })
+//XHR == XMLHttpRequest
+```
+
 # $
 jQuery는 $라는 문자로 시작된다. 필자는 이거 때문에 jQuery가 낯설고 라이브러리가 아닌 새로운 언어처럼 느껴졌었는데 사실 $는 JS에서 변수명으로 사용할 수 있는 특수 문자 중 하나일 뿐이다.
 ```
@@ -78,3 +98,6 @@ JS에서 변수명으로 사용가능한 특수 문자는 _(언더바), $(달러
     - https://dasima.xyz/javascript-variable-making-rule/
 - Native JS 이벤트 위임
     - https://ko.javascript.info/event-delegation
+- jQuery Promise 패턴
+    - https://uwostudy.tistory.com/54
+    - https://developyo.tistory.com/88
