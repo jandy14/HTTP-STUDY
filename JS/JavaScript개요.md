@@ -40,11 +40,31 @@ Node.js가 등장하고 백엔드 개발용으로 자바스크립트가 사용�
 
 ReactNative를 통해 안드로이드,ios앱을 만들 수 있다.
 
+# JS의 이벤트 루프
+JS는 단일 스레드 기반의 언어다. 다른 말로 한번에 하나의 일만 처리 가능하다는 의미다. 하지만 실제 브라우저는 여러 작업을 동시에 수행하는거처럼 보인다. (ex.이미지를 불러오면서 애니메이션을 실행시키면서 마우스 클릭에 반응한다.)
+
+JS엔진은 실제로 단일 콜스택을 가지고 있으며, 한번에 하나의 작업만 처리 가능하다. 비동기나 동시성을 가능하게 해주는 것은 JS엔진이 아닌 엔진을 구동하는 환경(브라우저,Node.js)에서 지원해 주는 것이다.
+```
+ES6부터 Job Queue라는 것이 생겨서 JS엔진도 비동기 처리를 지원한다
+```
+
+간략한 구도는 이렇다.
+
+![브라우저의 JS구조](https://image.toast.com/aaaadh/real/2018/techblog/b1493856379d11e69c16a9a4cf841567.png)
+
+JS엔진에서 Web API를 호출하면 API가 작업을 처리하게 된다.
+비동기로 처리된 작업들이 Task Queue에 쌓이고 JS엔진의 콜 스택이 비면 Task Queue의 제일 앞의 작업을 콜 스택에 넣어 처리한다.
+
+환경별로 이벤트 루프에 대한 구조는 비슷한 구조를 가지지만, 약간의 차이점은 있을 수 있다.
+
 # 용어
 - Syntactic Sugar (문법적 설탕) : 개발자가 사용하기 쉬우라고 만든 문법
 
 # 참고 자료
-JS<br>
-https://ko.javascript.info/intro
+- JS
+    - https://ko.javascript.info/intro
+    - https://learnjs.vlpt.us/basics/
 
-https://learnjs.vlpt.us/basics/
+- 이벤트 루프
+    - https://meetup.toast.com/posts/89
+    - https://velog.io/@thms200/Event-Loop-%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EB%A3%A8%ED%94%84
