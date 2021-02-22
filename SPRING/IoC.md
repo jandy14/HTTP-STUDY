@@ -169,16 +169,53 @@ public class Program {
 
 알 듯하지만 아직은 진심으로 와닿지는 않는다. 이 부분은 실제 프로젝트를 한 뒤, 다시 생각해봐야 할 듯 하다.
 
+## DI 방법과 순환 참조
+스프링에서는 DI를 위해 3가지 방법을 제공한다.
+
+* Field Injection (필드 주입)
+* Setter Based Injection (수정자 주입)
+* Construction Based Injection (생성자 주입)
+
+각각 코드로 나타내면 다음과 같다.
+```java
+// Field Injection
+@Autowired
+private CourseService courseService;
+
+// Setter Based Injection
+@Autowired
+public void setCourseService(CourseService courseService) {
+    this.courseService = courseService;
+}
+
+//Construction Based Injection
+@Autowired
+public StudentServiceImpl(CourseService courseService) {
+    this.courseService = courseService;
+}
+```
+이 중에서 스프링은 생성자 주입을 권장하고 있다.
+
+이유는 순환참조가 있는지 앱 실행도중이 아닌 앱 시작시에 알 수 있기 때문이다.
+```
+Bean의 필드에 다른 Bean이 있는 것을 참조라고 하는데, 이 참조에 순환이 생기는 것을 `순환참조`라 한다.
+```
+순환 호출과 같은 문제를 막기 위해서 순환 참조를 하지않는 것이 좋은데, 수정자 주입이나 필드 주입은 빈을 모두 생성하고 실행되기 때문에 순환 참조가 있는지 알아내지 못하지만 생성자 주입은 객체 생성과 동시에 필드를 채우기 때문에 순환 참조를 찾아낼 수 있다.
+
+그리고 보너스로 필드에 final 키워드를 사용할 수 있게 된다.
+
 # 참고 자료
 IoC 컨테이너
-https://gunju-ko.github.io/toby-spring/2019/03/25/IoC-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88%EC%99%80-DI.html
+- https://gunju-ko.github.io/toby-spring/2019/03/25/IoC-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88%EC%99%80-DI.html
 
 DI란
-https://velog.io/@wlsdud2194/what-is-di
+- https://velog.io/@wlsdud2194/what-is-di
 
-IoC의 장점<br>
-https://weicomes.tistory.com/451
+IoC의 장점
+- https://weicomes.tistory.com/451
+- https://vandbt.tistory.com/43
+- https://starkying.tistory.com/entry/IoC-DI
 
-https://vandbt.tistory.com/43
-
-https://starkying.tistory.com/entry/IoC-DI
+DI 방법과 순환 참조
+- https://yaboong.github.io/spring/2019/08/29/why-field-injection-is-bad/
+- https://madplay.github.io/post/why-constructor-injection-is-better-than-field-injection
