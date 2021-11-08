@@ -59,7 +59,7 @@ npm install apollo-server@^2 graphql
 
 주의: `apollo-server` 뒤에 붙은 `@^2`는 패키지의 메이저 버전을 명시하는 것이며, 참고한 자료가 2버전을 기준으로 작성되어서 본 실습에서도 이를 따른다. (현재는 3버전이 메이저 버전이며, 약간의 기능차이가 있지만 이번 실습에서는 호환가능하다.)
 
-설치가 끝나면 `package.json`에 dependencies항목에 프로젝트에 설치된 항목이 갱신되며 `node_modules`라는 디렉토리에 실제 패지키를 확인할 수 있다.
+설치가 끝나면 `package.json`에 dependencies항목에 프로젝트에 설치된 항목이 추가되며 `node_modules`라는 디렉토리에 실제 패지키를 확인할 수 있다.
 
 해당 package.json을 복사해 다른 곳에 생성한 후 `npm install` 명령을 실행하면 필요한 패키지 설치를 한번에 할 수 있다.
 
