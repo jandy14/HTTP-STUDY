@@ -1,11 +1,14 @@
 # GraphQL 시작하기
 이 글에서는 GraphQL을 체험해보기 위한 분들을 위한 글이며 아래와 같은 내용을 포함하고 있다.
 
-- GraphQL에 대한 간단한 개요
-- 실습 환경 세팅
-- GraphQL을 이용한 api 작성 및 실습
-    - 내용 조회하기
-    - 내용 생성 및 수정
+1. 시작하기
+    - GraphQL에 대한 간단한 개요
+    - 실습 환경 세팅
+2. 실습하기
+    - GraphQL의 요소
+    - GraphQL을 이용한 api 작성 및 실습
+        - 내용 조회하기
+        - 내용 생성 및 수정
 
 본 실습은 https://www.howtographql.com/graphql-js/0-introduction/ 을 기반으로 작성되었다.
 
@@ -57,11 +60,84 @@ npm init -y
 npm install apollo-server@^2 graphql
 ```
 
-주의: `apollo-server` 뒤에 붙은 `@^2`는 패키지의 메이저 버전을 명시하는 것이며, 참고한 자료가 2버전을 기준으로 작성되어서 본 실습에서도 이를 따른다. (현재는 3버전이 메이저 버전이며, 약간의 기능차이가 있지만 이번 실습에서는 호환가능하다.)
+apollo-server는 gql이 구현된 서버다. express나 aws 람다용으로 구현된 것도 있다.
+
+주의: `apollo-server` 뒤에 붙은 `@^2`는 패키지의 메이저 버전을 명시하는 것이며, 참고한 자료가 2버전을 기준으로 작성되어서 본 실습에서도 이를 따른다. (현재는 3버전이 메이저 버전이며, 약간의 기능차이가 있지만 이번 실습에서는 어느 버전이여도 상관없다.)
+
+2버전에서 실습이 안되면 3버전으로 진행하길 바란다.
 
 설치가 끝나면 `package.json`에 dependencies항목에 프로젝트에 설치된 항목이 추가되며 `node_modules`라는 디렉토리에 실제 패지키를 확인할 수 있다.
 
 해당 package.json을 복사해 다른 곳에 생성한 후 `npm install` 명령을 실행하면 필요한 패키지 설치를 한번에 할 수 있다.
+
+## gql 서버 실행
+
+`src` 디렉토리를 생성하고 그 안에 `index.js` 파일을 생성한다.
+
+아래 내용을 `index.js`에 넣어준다.
+
+```
+const { ApolloServer } = require('apollo-server');
+
+// 1
+const typeDefs = `
+  type Query {
+    info: String!
+  }
+`
+
+// 2
+const resolvers = {
+  Query: {
+    info: () => `info api 입니다.`
+  }
+}
+
+// 3
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+})
+
+server
+  .listen()
+  .then(({ url }) =>
+    console.log(`Server is running on ${url}`)
+  );
+```
+
+설명은 뒤에 다루도록 하고 우선은 실행을 시켜보자
+
+```
+node src/index.js
+```
+
+아래 문구가 뜨면 gql 서버 실행 성공이다.
+```
+Server is running on http://localhost:4000/
+```
+url로 접근하면 아래와 같은 화면이 뜬다.
+
+![url 접속 화면](./img/start-server.png)
+
+Query your server를 눌러 이동하면 gql 서버에 요청을 보낼 수 있는 페이지로 이동한다.
+
+![아폴로 스튜디오 화면](./img/apollo-studio.png)
+
+1. 접속할 서버
+2. 서버에서 제공하는 스키마 목록
+3. 요청 쿼리 작성
+4. 응답
+5. 파라미터, 헤더 설정
+
+3번 칸에 `query { info }` 를 작성하고 `Run`버튼을 누르면
+
+4번 칸에 응답이 오는 것을 확인할 수 있다.
+
+# 정리
+이번 장에는 환경을 설정하고 gql이 구현된 서버인 apollo를 실행하고 간단히 쿼리를 날려 보았다.
+
+다음장에는 이번장에 적은 코드에 각 요소가 무엇을 의미하는지 알아보고 새로운 `query`와 `mutation`을 작성해 보도록 하자.
 
 # 참고 자료
 - how to graphql
