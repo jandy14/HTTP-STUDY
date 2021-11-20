@@ -62,9 +62,11 @@ npm install apollo-server@^2 graphql
 
 apollo-server는 gql이 구현된 서버다. express나 aws 람다용으로 구현된 것도 있다.
 
+----
 주의: `apollo-server` 뒤에 붙은 `@^2`는 패키지의 메이저 버전을 명시하는 것이며, 참고한 자료가 2버전을 기준으로 작성되어서 본 실습에서도 이를 따른다. (현재는 3버전이 메이저 버전이며, 약간의 기능차이가 있지만 이번 실습에서는 어느 버전이여도 상관없다.)
 
-2버전에서 실습이 안되면 3버전으로 진행하길 바란다.
+----
+2버전에서 실습이 안되면 3버전으로 진행하길 바란다. (윈도우에선 2버전으로 안돼서 3버전으로 진행했다. 실습하는 동안엔 차이가 없으니 원하는 버전으로 진행하자.)
 
 설치가 끝나면 `package.json`에 dependencies항목에 프로젝트에 설치된 항목이 추가되며 `node_modules`라는 디렉토리에 실제 패지키를 확인할 수 있다.
 
@@ -116,11 +118,21 @@ node src/index.js
 ```
 Server is running on http://localhost:4000/
 ```
-url로 접근하면 아래와 같은 화면이 뜬다.
+url로 접근하면 아래와 같은 화면이 뜬다. (2버전 기준)
+
+![플레이그라운드 화면](./img/playground.png)
+
+서버에 요청을 보내고 받을 수 있는 내장 IDE인데 3버전에서는 기본적으로 비활성화되어 있다.
+
+대신 3버전은 아래와 같은 화면이 뜬다.
 
 ![url 접속 화면](./img/start-server.png)
 
 Query your server를 눌러 이동하면 gql 서버에 요청을 보낼 수 있는 페이지로 이동한다.
+
+3버전에서 알려주는 페이지가 더 편리해서 이번 실습은 아래 페이지에서 진행한다.
+
+https://studio.apollographql.com/sandbox/explorer
 
 ![아폴로 스튜디오 화면](./img/apollo-studio.png)
 
