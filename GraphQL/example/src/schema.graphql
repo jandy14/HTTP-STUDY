@@ -1,0 +1,21 @@
+type Query {
+  stores: [Store!]
+  store(id: ID!): Store
+  product(id: ID!): Product
+}
+type Mutation {
+  store(title: String!, description: String): Store
+  product(storeId: ID!, title: String!, price: Int!): Product
+}
+type Store {
+  id: ID!
+  title: String!
+  description: String
+  products: [Product!]
+}
+type Product {
+  id: ID!
+  title: String!
+  price: Int!
+  store: Store!
+}
