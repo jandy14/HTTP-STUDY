@@ -1,7 +1,7 @@
 function products(parent, args, context, info) {
-    return context.products.filter(element => element.storeId === parent.id)
+    return context.products.filter(element => element.storeId == parent.id)
 }
 
-module.export = {
+module.exports = {
     products,
 }

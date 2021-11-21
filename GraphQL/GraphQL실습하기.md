@@ -391,6 +391,13 @@ GraphQL에 중요한 개념은 전부 다룬 것 같다.
 
 아래 예제는 [링크](./example)에서 확인 가능하며, 바로 실행해봐도 좋고, 본인이 직접해보고 비교해봐도 좋다.
 
+실행은 아래 명령어를 실행하면된다.
+```shell
+cd example
+npm install
+node src/index.js
+```
+
 리졸버를 별도의 파일로 나눴는데, 참고한 튜토리얼처럼 한 것뿐이며, 어떻게 리졸버를 정의하고 불러오는지는 본인이 편한대로 하도록 하자.
 
 ## 스키마
@@ -430,10 +437,10 @@ Query
 Query: {
   stores: (parent, args, context, info) => context.stores,
   store: (parent, args, context, info) => {
-    return context.stores.find(element => element.id === args.id)
+    return context.stores.find(element => element.id == args.id)
   },
   product: (parent, args, context, info) => {
-    return context.products.find(element => element.id === args.id)
+    return context.products.find(element => element.id == args.id)
   }
 }
 ```
@@ -465,7 +472,7 @@ Store
 ``` javascript
 Store: {
   products: (parent, args, context, info) => {
-    return context.products.filter(element => element.storeId === parent.id)
+    return context.products.filter(element => element.storeId == parent.id)
   }
 }
 ```
@@ -473,7 +480,7 @@ Product
 ``` javascript
 Product: {
   store: (parent, args, context, info) => {
-    return context.stores.find(element => element.id === parent.storeId)
+    return context.stores.find(element => element.id == parent.storeId)
   }
 }
 ```
