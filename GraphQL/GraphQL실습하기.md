@@ -18,7 +18,7 @@ const typeDefs = `
 const resolvers = {
   Query: {
     info: () => `info api 입니다.`
-  }
+  },
 }
 
 // 3
@@ -64,7 +64,7 @@ src 디렉토리 안에 `schema.graphql`이라는 파일을 생성하자.
 
 파일 안에 `typeDefs`의 내용을 넣어주자.
 
-```
+``` graphql
 type Query {
   info: String!
   feed: Link!
@@ -85,6 +85,17 @@ type Link {
 
 `ID`타입은 `String`과 본질적으론 같지만 식별자로써 사용되는걸 알리기 위해 사용한다.
 
+`index.js`에 `typeDefs`에는 다음과 같이 적어준다.
+``` javascript
+import fs from 'fs'
+import path from 'path'
+
+const typeDefs = fs.readFileSync(
+  path.join(__dirname, './src/schema.graphql'),
+  'utf8'
+)
+```
+
 스키마를 추가해주면 그에 맞게 리졸버도 추가를 해야한다.
 
 ``` javascript
@@ -99,13 +110,13 @@ const resolvers = {
     info: () => `info api 입니다.`,
     // 1
     feed: () => linkValue,
-  }
+  },
   // 2
   Link: {
     id: (parent) => parent.id,
     description: (parent) => parent.description,
     url: (parent) => parent.url,
-  }
+  },
 }
 ```
 
@@ -129,8 +140,8 @@ query {
 `feed`의 타입은 기본 타입(`String`같은 스칼라 타입)이 아닌 여러 필드를 가질 수 있는 사용자정의 타입인 `Link`이기 때문에 요청을 할때도 어느 필드값을 알고 싶은지 정해서 요청을 하고, 응답을 할때도 `feed`의 반환값을 그대로 사용하는 것이 아니라 `Link`의 각 필드값을 구하기 위해서 각 필드의 리졸버를 다시 호출한다. 이때 이전 리졸버의 반환값을 `parent`를 통해서 얻을 수 있다.
 
 `parent`값을 통해서 구할 수 있으면 되기 때문에 아래와 같이 활용도 가능하다.
-``` javascript
-// schema.graphql
+``` graphql
+# schema.graphql
 type Link {
   id: ID!
   url: String!
@@ -138,15 +149,20 @@ type Link {
   urlLength: Int!
   shortDescription: String
 }
-// resolvers
+```
+
+``` javascript
+// resolvers에 추가
 Link: {
   id: (parent) => parent.id,
   description: (parent) => parent.description,
   url: (parent) => parent.url,
   urlLength: (parent) => parent.url.length,
   shortDescription: (parent) => parent.description.substring(0,5),
-}
-// request
+},
+```
+request
+``` graphql
 query {
   feed {
     urlLength
@@ -162,7 +178,7 @@ feed의 반환값 `linkValue`에는 `urlLength`나 `shortDescription`값이 없�
 Link: {
   urlLength: (parent) => parent.url.length,
   shortDescription: (parent) => parent.description.substring(0,5),
-}
+},
 ```
 처음부터 이 사실을 알려주지 않은건 모든 필드 값들이 리졸버를 통해서 정의된다는 사실을 말하고 싶었기 때문이다.
 
@@ -170,13 +186,14 @@ Link: {
 모든 타입들은 리스트 타입을 가진다.
 
 이전 예제를 변형해 리스트를 반환해보자.
-``` javascript
-// schema.graphql
+``` graphql
+# schema.graphql
 type Query {
   info: String!
-  feed: [Link!]! // 1
+  feed: [Link!]! # 1
 }
-
+```
+``` javascript
 // index.js
 // 2
 let linkValues = [{
@@ -184,9 +201,17 @@ let linkValues = [{
   url: 'www.howtographql.com',
   description: 'Fullstack tutorial for GraphQL'
 }]
-Query: {
-  info: () => `info api 입니다.`,
-  feed: () => linkValues, // 3
+
+const resolvers = {
+  Query: {
+    info: () => `info api 입니다.`,
+    // 3
+    feed: () => linkValues,
+  },
+  Link: {
+    urlLength: (parent) => parent.url.length,
+    shortDescription: (parent) => parent.description.substring(0,5),
+  },
 }
 ```
 1. 타입에 대괄호를 씌움으로써 리스트타입임을 나타낸다.
@@ -200,7 +225,7 @@ Query: {
 3. 변경된 변수명을 적용하였다.
 
 쿼리는 동일하다.
-``` javascript
+``` graphql
 query {
   feed {
     id
@@ -237,7 +262,7 @@ query {
 중요한 기술적인 차이가 한가지있다.
 
 요청할 때, 아래처럼 여러 요청을 한번에 할 수 있는데,
-```
+``` graphql
 # info와 feed를 한번에 요청했다.
 query {
   info
@@ -250,26 +275,38 @@ query {
 
 `linkValues`에 값을 추가하는 `mutation`을 작성해보자.
 
-``` javascript
-// schema.graphql
+``` graphql
+# schema.graphql
 type Mutation {
-  // 1
+  # 1
   addLink(id: ID, url: String, desc: String) : Link
 }
+```
+``` javascript
 // resolvers
-// 2
-Mutation: {
-  addLink: (parent, args) => {
-    if (!args.id || !args.url || !args.desc) {
-      return null
-    }
-    const item = {
-      id: args.id,
-      url: args.url,
-      description: args.desc,
-    }
-    linkValues.push(item)
-    return item
+const resolvers = {
+  Query: {
+    info: () => `info api 입니다.`,
+    feed: () => linkValues,
+  },
+  // Mutation resolver 추가
+  Mutation: {
+    addLink: (parent, args) => {
+      if (!args.id || !args.url || !args.desc) {
+        return null
+      }
+      const item = {
+        id: args.id,
+        url: args.url,
+        description: args.desc,
+      }
+      linkValues.push(item)
+      return item
+    },
+  },
+  Link: {
+    urlLength: (parent) => parent.url.length,
+    shortDescription: (parent) => parent.description.substring(0,5),
   },
 }
 ```
@@ -279,7 +316,7 @@ Mutation: {
     - 위 코드처럼 스키마에 적은 이름을 통해 전달받은 값에 접근 가능하다.
 
 파라미터가 있는 요청은 다음과 같이 가능하다.
-```
+``` graphql
 mutation {
   addLink(id: "link-1", url: "www.www.www", desc: "wwwdesc") {
     id
@@ -317,6 +354,7 @@ mutation {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  // context 추가
   context: {
     linkValues: linkValues
   },
@@ -324,6 +362,7 @@ const server = new ApolloServer({
 ```
 추가해준 `context`는 리졸버의 파라미터로 접근 가능하다.
 ``` javascript
+// resolvers
 Mutation: {
   addLink: (parent, args, context) => {
     if (!args.id || !args.url || !args.desc) {
@@ -334,6 +373,7 @@ Mutation: {
       url: args.url,
       description: args.desc,
     }
+    // context를 통해 linkValues에 접근
     context.linkValues.push(item)
     return item
   },
@@ -477,15 +517,22 @@ query {
 ----
 ----
 위 예제에서 설명의 편의를 위해 `Query`에 다음 필드를 추가하자.
+``` graphql
+Query {
+  stores: [Store!]
+  store(id: ID!): Store
+  product(id: ID!): Product
+  # 모든 product를 보여주는 products 추가
+  products: [Product!]!
+}
+```
 ``` javascript
-products: [Product!]!
-
-//resolver
+//resolver query에 추가
 products: (parent, args, context, info) => context.products,
 ```
 
 아래 쿼리를 호출해보자.
-```
+``` graphql
 query {
   products {
     store {
@@ -495,17 +542,31 @@ query {
 }
 ```
 
-위 쿼리에 응답하기 위해서는 각 요소의 `storeId`값으로 `context.stores`를 확인해 동일한 값을 찾아야한다.
+위 쿼리에 응답하기 위해서 gql은 각 요소마다 `storeId`값으로 `context.stores`를 확인해 `store`를 찾는 리졸버가 호출된다.
 
-만약 데이터가 DB에 저장되어 있더라면 요소마다 한번씩 값을 찾기 위해 DB를 호출하게 될 것이다. 게다가 중복되는 값이 많은 `storeId`와 같은 값이면 더욱 비효율적이게 된다.
+만약 데이터가 DB에 저장되어 있더라면 요소마다 한번씩 값을 찾기 위해 리졸버가 DB를 호출하게 될 것이다. 게다가 중복되는 값이 많은 `storeId`와 같은 값이면 더욱 비효율적이게 된다.
 
 이 문제는 `N+1 문제`로 알려져있고, 이를 해결하기 위해 캐싱이나 배치와 같은 방법으로 해결하기도 한다.
 
 ----
 
 # 마무리
-없다 재미난 GraphQL되시길!
+GraphQL에 대한 기본적인 개념에 대해 알아보고 실습해보았다.
+
+실습을 통해 GraphQL에 대한 이해와 흥미가 생겼다면 좋겠다.
+
+본 실습에서 다룬 내용 외에 스키마에는 `input`, `enum`, `scalar`와 같은 타입도 존재하고,
+
+`Query`, `Mutation`외에 websocket을 이용한 `Subscription`이라는 특수 타입도 존재한다.
+
+이미지 전송같은 기능을 구현하기 위해 미들웨어를 추가할 수도 있다.
+
+GraphQL에 더욱 흥미가 생긴다면 위와 같은 키워드를 찾아보는 것도 좋겠다.
+
+
 
 # 참고 자료
 - how to graphql
     - https://www.howtographql.com/
+- graphql docs
+    - https://graphql.org/learn/
