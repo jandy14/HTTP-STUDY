@@ -87,11 +87,11 @@ type Link {
 
 `index.js`에 `typeDefs`에는 다음과 같이 적어준다.
 ``` javascript
-import fs from 'fs'
-import path from 'path'
+const fs = require('fs')
+const path = require('path')
 
 const typeDefs = fs.readFileSync(
-  path.join(__dirname, './src/schema.graphql'),
+  path.join(__dirname, './schema.graphql'),
   'utf8'
 )
 ```
