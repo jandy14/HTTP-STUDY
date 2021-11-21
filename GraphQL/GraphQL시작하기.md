@@ -81,7 +81,7 @@ apollo-server는 gql이 구현된 서버다. express나 aws 람다용으로 구�
 
 아래 내용을 `index.js`에 넣어준다.
 
-```
+``` javascript
 const { ApolloServer } = require('apollo-server');
 
 // 1
