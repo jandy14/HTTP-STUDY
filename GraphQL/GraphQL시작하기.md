@@ -13,7 +13,9 @@
 본 실습은 https://www.howtographql.com/graphql-js/0-introduction/ 을 기반으로 작성되었다.
 
 # 개요
-GraphQL(이하 gql)은 페이스북(meta)에서 개발한 프론트와 서버(백엔드)간에 사용되는 쿼리언어다.
+GraphQL(이하 gql)은 페이스북(meta)에서 개발한 프론트와 서버(백엔드)간에 사용되는 쿼리언어다. 즉 API용 쿼리 언어다.
+
+RESTful한 API 설계의 단점들을 해결하기 위해 개발되었다. ([자세한 내용과 예시 링크](https://www.howtographql.com/basics/1-graphql-is-the-better-rest/))
 
 gql은 다음과 같은 특징이 있다.
 
