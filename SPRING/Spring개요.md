@@ -55,12 +55,22 @@ Ant와 Maven의 장점을 모아 만든 관리 도구이다.
 
 여러 개의 이미지를 링크한 이유는 서로 비교하면서 공통점은 무엇인지 어디가 차이가 나는지 보기 위함이다. 지금처럼 이해도가 낮을 때, 인터넷의 자료를 하나만 참고하면 잘못된 지식을 얻을 수 있기 때문에 이런 검증과정이 필요하다.
 
-# 스프링 프레임워크의 주요 모듈
-스프링에서 자주 사용되는 모듈 중 다음을 알아보자.
+# 스프링 프레임워크의 구조
+스프링의 구조
+
+![spring구조](https://t1.daumcdn.net/cfile/tistory/99A523405B9E2C1510)
+
+스프링에서 주요 구조 중 다음을 알아보자.
 - webMVC
+- DAO
+- ORM
 
 ## webMVC
 자세한 내용은 [링크](./MVC.md)
+
+## DAO
+
+## ORM
 
 # Spring Boot
 스프링 부트는 스프링 프로젝트를 아주 간편하게 설정할 수 있는 스프링 프레임워크의 서브 프로젝트다.
@@ -89,6 +99,9 @@ https://www.youtube.com/watch?v=XtXHIDnzS9c&list=PLq8wAnVUcTFUHYMzoV2RoFoY2HDTKr
 
 스프링 프레임워크
 https://ko.wikipedia.org/wiki/%EC%8A%A4%ED%94%84%EB%A7%81_%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC
+
+스프링 주요 모듈
+https://khj93.tistory.com/entry/Spring-Spring-Framework%EB%9E%80-%EA%B8%B0%EB%B3%B8-%EA%B0%9C%EB%85%90-%ED%95%B5%EC%8B%AC-%EC%A0%95%EB%A6%AC
 
 스프링을 배워야 할까
 https://seolin.tistory.com/119
