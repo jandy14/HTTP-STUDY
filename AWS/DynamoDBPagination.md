@@ -55,12 +55,32 @@ GSI는 어떤 항목이라도 파티션키,정렬키로 설정가능하며, 테�
 
 저 중에서 `Limit`와 `ExclusiveStartKey`를 이용해서 페이징을 `제한적으로 구현` 가능하다.
 
+# 응답
+응답은 다음 처리순서를 가진다.
 
+1. 파티션키를 이용한 파티션 확인
+2. 정렬키를 이용한 탐색 시작위치 확인
+3. Limit를 최대값으로 스캔시작
+4. 필터를 통한 결과값 필터링
 
-scannedCount
-Count
-LastEvaluatedKey
+응답은 이런 값을 가진다.
 
+- scannedCount : 스캔한 갯수
+- Count : 스캔 내용중 필터까지 통과한 갯수
+- Items : 결과값
+- LastEvaluatedKey : 스캔한 마지막 위치
+
+# 살펴볼 사항
+
+## Count과 scannedCount
+
+limit값은 scannedCount에 관여하는 값이다. 실제 필요한 Count값은 결과로만 알 수 있다. (== 필터링을 사용할 때 원하는 값만 가져올 수 없다.)
+
+## LastEvaluatedKey
+
+한 페이지당 10개씩 보는 페이지가 있을때,
+
+1페이지 다음에 5페이지로 넘어가려고 하면
 
 순차적으로 읽기
 
@@ -73,6 +93,9 @@ LastEvaluatedKey
 인덱싱을 잘한다면 가능할 지도 모르지만 (안될듯...) 안하는게 효율이 좋을거 같다. 아니면 다른 DB를 찾는게 좋을듯
 
 검색하려면 제목 검색만 하려고 해도 검색에 필요한 데이터가 3가지다. 어느게임, 상품의 상태, 상품 제목.  하지만 인덱싱은 파티션키,정렬키까지 2가지만 가능하다. 방법이 있을까
+
+# 스캔 vs 쿼리
+![메소드 선택 알고리즘](https://dynobase-assets.s3-us-west-2.amazonaws.com/scan-vs-query.png)
 
 # 참고 자료
 - 요청, 응답 파라미터
