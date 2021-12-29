@@ -133,6 +133,10 @@ sam local start-api -d 5858
 
 postman같은 앱을 사용하면 추가적인 요청은 없기때문에 요청마다만 디버거를 연결해주면 된다.
 
+아래와 같이 디버깅이 가능하다.
+
+![중단점](./img/breakpoint.png)
+
 # 참고 자료
 * aws docs
     * https://docs.aws.amazon.com/ko_kr/serverless-application-model/latest/developerguide/serverless-sam-cli-using-debugging.html
