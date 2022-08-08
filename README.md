@@ -14,12 +14,12 @@
 ### JAVA
 * [Java개요](./JAVA/Java개요.md)
 * [Java문법](./JAVA/Java문법.md)
+* [Annotation](./JAVA/Annotation.md)
 ### SPRING
 * [Spring개요](./SPRING/Spring개요.md)
 * [IoC](./SPRING/IoC.md)
 * [AOP](./SPRING/AOP.md)
 * [MVC](./SPRING/MVC.md)
-* [Annotation](./JAVA/Annotation.md)
 * [템플릿엔진](./SPRING/템플릿엔진.md)
 ### DB
 * [DBMS개요](./DB/DBMS개요.md)
