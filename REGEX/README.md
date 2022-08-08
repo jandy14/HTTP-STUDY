@@ -168,7 +168,9 @@ replace text
 
 ## 목차
 
-목차는 [regexr.com](https://regexr.com)의 reference의 항목을 따랐다.
+목차는 [regexr.com](https://regexr.com)의 Reference의 항목을 따랐다.
+
+References외에도 Community Patterns에서 개발중 한번씩 사용하게 되는 여러 정규식에 참고할 수 있다.
 
 본인만의 실습환경이 있다면 사용해도 무방하고 위 링크의 사이트에서 실습해도 좋다.
 
@@ -180,7 +182,6 @@ replace text
 1. [전후방탐색 (Lookaround)](./6_전후방탐색.md)
 1. [치환 (Substitution)](./7_치환.md)
 1. [플래그 (Flags)](./8_플래그.md)
-
 ## 참고 자료
 - 위키 백과
   - https://ko.wikipedia.org/wiki/%EC%A0%95%EA%B7%9C_%ED%91%9C%ED%98%84%EC%8B%9D
