@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin: 0; overflow: hidden; position: relative; }
+        canvas { display: block; position: absolute; top:0; pointer-events: none;}
+    </style>
+</head>
+<body>
+    <div>마우스 커서 위치에 따라 픽셀 색 변경</div>
+    <div>캔버스 아래 텍스트 드래그 가능</div>
+    <div>asdf</div>
+    <div>asdf</div>
+    <div>asdf</div>
+    <div>asdf</div>
+    <div>asdf</div>
+    <div>asdf</div>
+    <canvas id="myCanvas"></canvas>
+    <script>
+        var startTime = Date.now();
+        var canvas = document.getElementById("myCanvas");
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+        var gl = canvas.getContext("webgl", { premultipliedAlpha : false });
+
+
+        var webglVersion = gl.getParameter(gl.VERSION);
+        console.log("WebGL Version: " + webglVersion);
+
+        var vertexShaderSource = `
+            attribute vec2 a_position;
+
+            void main() {
+                gl_Position = vec4(a_position, 0, 1);
+            }
+        `;
+
+        var fragmentShaderSource = `
+            precision mediump float;
+            uniform vec2 u_resolution;
+            uniform float u_mouseposArray[300];
+            uniform float u_time;
+
+            float pseudoRandom(vec2 st, vec2 salt) {
+                return fract(sin(dot(vec2(12.9898,78.233) + st, vec2(12.9898,78.233) + salt)) * 43758.5453);
+            }
+
+            float pseudoRandom2(vec2 st, vec2 salt) {
+                return fract(sin(dot(vec2(12.9898,78.233) + st, vec2(16.2598,748.233) + salt)) * 55438.5453);
+            }
+
+            float pseudoRandom3(vec2 st, vec2 salt) {
+                return fract(sin(dot(vec2(12.9898,78.233) + st, vec2(156.2598, 48.2433) + salt)) * 90438.249863);
+            }
+
+            float calculateDistance(float p1x, float p1y, float p2x, float p2y) {
+                return sqrt(pow(p2x - p1x, 2.0) + pow(p2y - p1y, 2.0));
+            }
+
+            void main() {
+
+                gl_FragColor = vec4(0.0,0.0,0.0,1.0);
+                for (int i = 0; i < 300; i += 3) {
+                    float x = gl_FragCoord.x;
+                    float y = gl_FragCoord.y;
+                    float size = (20.0 - (u_time - u_mouseposArray[i+2]) / 30.0) * (float(i)/ 300.0);
+                    if(calculateDistance(x,y,u_mouseposArray[i],u_mouseposArray[i+1]) < size) {
+                        gl_FragColor = vec4(pseudoRandom(vec2(u_mouseposArray[i],u_mouseposArray[i+1]), vec2(0.0,0.0)),pseudoRandom2(vec2(u_mouseposArray[i],u_mouseposArray[i+1]), vec2(0.0,0.0)),pseudoRandom3(vec2(u_mouseposArray[i],u_mouseposArray[i+1]), vec2(0.0,0.0)),0.2);
+                    }
+                }
+            }
+        `;
+
+        // 셰이더 컴파일 함수
+        function compileShader(gl, source, type) {
+            var shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                console.error(gl.getShaderInfoLog(shader));
+                gl.deleteShader(shader);
+                return null;
+            }
+            return shader;
+        }
+
+        // 프로그램 초기화 함수
+        function initializeProgram() {
+
+            var vertexShader = compileShader(gl, vertexShaderSource, gl.VERTEX_SHADER);
+            var fragmentShader = compileShader(gl, fragmentShaderSource, gl.FRAGMENT_SHADER);
+
+            var program = gl.createProgram();
+            gl.attachShader(program, vertexShader);
+            gl.attachShader(program, fragmentShader);
+            gl.linkProgram(program);
+
+            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+                console.error(gl.getProgramInfoLog(program));
+                return null;
+            }
+
+            gl.useProgram(program);
+
+            var vertexShader = compileShader(gl, vertexShaderSource, gl.VERTEX_SHADER);
+            var fragmentShader = compileShader(gl, fragmentShaderSource, gl.FRAGMENT_SHADER);
+
+            var positionLocation = gl.getAttribLocation(program, "a_position");
+            var vertices = new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]);
+            var vertexBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+            gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+            gl.enableVertexAttribArray(positionLocation);
+
+
+            var resolutionUniformLocation = gl.getUniformLocation(program, 'u_resolution');
+            
+            var mouseposArrayUniformLocation = gl.getUniformLocation(program, 'u_mouseposArray');
+            
+            var timeUniformLocation = gl.getUniformLocation(program, 'u_time');
+
+            render();
+
+            var points = [];
+
+            window.addEventListener('mousemove', function (event) {
+                // 캔버스 좌표를 WebGL 좌표로 변환
+                var x = event.clientX;
+                var y = canvas.height - event.clientY;
+                var time = Date.now() - startTime;
+                console.log(x,y, time)
+                points.push(x,y, time)
+                if(points.length > 300) {
+                    points.splice(0, 3);
+                }
+                console.log(new Float32Array(points))
+                gl.uniform2f(resolutionUniformLocation, canvas.width, canvas.height);
+                gl.uniform1fv(mouseposArrayUniformLocation, new Float32Array(points));
+                gl.uniform1f(timeUniformLocation, Date.now() - startTime);
+
+                render();
+            });
+
+            window.addEventListener("resize", function (event) {
+                canvas.width = window.innerWidth
+                canvas.height = window.innerHeight
+            });
+
+            setInterval(() => {
+                gl.uniform1f(timeUniformLocation, Date.now() - startTime);
+                render();
+            }, 10)
+        }
+
+        // 렌더링 함수
+        function render() {
+            gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        }
+
+        
+        // WebGL 초기화 및 프로그램 초기화
+        function initialize() {
+            gl.clearColor(0, 0, 0, 0);
+            initializeProgram();
+        }
+
+        initialize();
+    </script>
+</body>
