@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebGL Cube Rotation Example</title>
+<style>
+    body { margin: 0; }
+    canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="glCanvas" width="640" height="480"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"></script>
+<script>
+// WebGL 초기화
+const canvas = document.getElementById('glCanvas');
+const gl = canvas.getContext('webgl');
+
+// 셰이더 소스 코드
+const vertexShaderSource = `
+    attribute vec4 aVertexPosition;
+    uniform mat4 uModelViewMatrix;
+    uniform mat4 uProjectionMatrix;
+    void main() {
+        gl_Position = uProjectionMatrix * uModelViewMatrix * aVertexPosition;
+    }
+`;
+
+const fragmentShaderSource = `
+    void main() {
+        gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
+    }
+`;
+
+// 셰이더 생성 함수
+function createShader(gl, type, source) {
+    const shader = gl.createShader(type);
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.error('Shader compilation error:', gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+    }
+    return shader;
+}
+
+// 프로그램 생성 함수
+function createProgram(gl, vertexShader, fragmentShader) {
+    const program = gl.createProgram();
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error('Program linking error:', gl.getProgramInfoLog(program));
+        gl.deleteProgram(program);
+        return null;
+    }
+    return program;
+}
+
+// 정육면체를 위한 버퍼 생성
+const positions = [
+    // Front face
+    -1.0, -1.0,  1.0,
+    1.0, -1.0,  1.0,
+     1.0,  1.0,  1.0,
+     -1.0, -1.0,  1.0,
+     1.0,  1.0,  1.0,
+    -1.0,  1.0,  1.0,
+    // Back face
+    -1.0, -1.0,  -1.0,
+    1.0, -1.0,  -1.0,
+     1.0,  1.0,  -1.0,
+     -1.0, -1.0,  -1.0,
+     1.0,  1.0,  -1.0,
+    -1.0,  1.0,  -1.0,
+    // Top face
+    1.0,  1.0, -1.0,
+    1.0, -1.0,  1.0,
+     1.0,  -1.0,  -1.0,
+     1.0,  1.0, -1.0,
+    1.0, -1.0,  1.0,
+     1.0,  1.0, 1.0,
+    // Bottom face
+    -1.0,  1.0, -1.0,
+    -1.0, -1.0,  1.0,
+     -1.0,  -1.0,  -1.0,
+     -1.0,  1.0, -1.0,
+    -1.0, -1.0,  1.0,
+     -1.0,  1.0, 1.0,
+    // Right face
+    1.0, 1.0,  1.0,
+     -1.0, 1.0,  -1.0, 
+    1.0, 1.0, -1.0,
+    1.0, 1.0,  1.0,
+     -1.0, 1.0,  -1.0, 
+     -1.0, 1.0,  1.0,
+    // Left face
+    1.0, -1.0,  1.0,
+     -1.0, -1.0,  -1.0, 
+    1.0, -1.0, -1.0,
+    1.0, -1.0,  1.0,
+     -1.0, -1.0,  -1.0, 
+     -1.0, -1.0,  1.0
+];
+
+const positionBuffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+// 버텍스 셰이더와 프래그먼트 셰이더 생성
+const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+
+// 프로그램 생성
+const program = createProgram(gl, vertexShader, fragmentShader);
+
+// 프로그램을 사용하도록 지정
+gl.useProgram(program);
+
+// 버텍스 셰이더 내 attribute와 uniform 변수 위치 가져오기
+const vertexPosition = gl.getAttribLocation(program, 'aVertexPosition');
+gl.enableVertexAttribArray(vertexPosition);
+
+// 투영 행렬 생성
+const projectionMatrix = mat4.create();
+const fieldOfView = Math.PI / 4; // 45도
+const aspect = canvas.clientWidth / canvas.clientHeight;
+const zNear = 0.1;
+const zFar = 100.0;
+mat4.perspective(projectionMatrix, fieldOfView, aspect, zNear, zFar);
+
+// 모델뷰 행렬 생성
+const modelViewMatrix = mat4.create();
+
+// 모델뷰 행렬을 위한 uniform 변수 위치 가져오기
+const modelViewMatrixUniform = gl.getUniformLocation(program, 'uModelViewMatrix');
+const projectionMatrixUniform = gl.getUniformLocation(program, 'uProjectionMatrix');
+
+// 모델뷰 행렬 초기화
+mat4.translate(modelViewMatrix, modelViewMatrix, [0.0, 0.0, -5.0]);
+
+// 회전 변수 초기화
+let then = 0;
+let cubeRotation = 0.0;
+
+// 회전 함수
+function drawScene(now) {
+    now *= 0.001;  // 초 단위로 변환
+    const deltaTime = now - then;
+    then = now;
+
+    // 캔버스 크기에 맞춰서 조정
+    if (canvas.width !== canvas.clientWidth || canvas.height !== canvas.clientHeight) {
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        mat4.perspective(projectionMatrix, fieldOfView, canvas.width / canvas.height, zNear, zFar);
+    }
+
+    // 정육면체 회전
+    cubeRotation += deltaTime;
+
+    // 화면 지우기
+    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    gl.clearDepth(1.0);
+
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    // 정육면체를 그리기 위한 준비
+    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    gl.vertexAttribPointer(vertexPosition, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(vertexPosition);
+
+    // 모델뷰 행렬을 회전시킵니다.
+    mat4.identity(modelViewMatrix);
+    mat4.translate(modelViewMatrix, modelViewMatrix, [0.0, 0.0, -5.0]);
+    mat4.rotate(modelViewMatrix, modelViewMatrix, cubeRotation, [0, 1, 0]);
+
+    // 모델뷰 행렬과 투영 행렬을 셰이더로 전달
+    gl.uniformMatrix4fv(modelViewMatrixUniform, false, modelViewMatrix);
+    gl.uniformMatrix4fv(projectionMatrixUniform, false, projectionMatrix);
+
+    // 정육면체를 그립니다.
+    const vertexCount = 36;
+    gl.drawArrays(gl.TRIANGLES, 0, vertexCount);
+
+    // 반복 호출을 위해 다음 프레임을 요청합니다.
+    requestAnimationFrame(drawScene);
+}
+
+// 애니메이션 시작
+requestAnimationFrame(drawScene);
+
+// 드래그 상태를 나타내는 변수들
+let dragging = false;
+let lastX = -1;
+let lastY = -1;
+
+// 마우스 이벤트 처리
+canvas.addEventListener('mousedown', (event) => {
+dragging = true;
+lastX = event.clientX;
+lastY = event.clientY;
+});
+
+canvas.addEventListener('mouseup', () => {
+dragging = false;
+});
+
+canvas.addEventListener('mousemove', (event) => {
+if (!dragging) return;
+
+const xDelta = event.clientX - lastX;
+const yDelta = event.clientY - lastY;
+
+lastX = event.clientX;
+lastY = event.clientY;
+
+// 회전 각도 계산
+const radPerPixel = 0.01;
+const theta = xDelta * radPerPixel;
+const phi = yDelta * radPerPixel;
+
+// 모델뷰 행렬에 회전을 적용
+mat4.rotate(modelViewMatrix, modelViewMatrix, theta, [0, 1, 0]);
+mat4.rotate(modelViewMatrix, modelViewMatrix, phi, [1, 0, 0]);
+});
+</script>
+</body>
+</html>
+
